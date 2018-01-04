@@ -20,6 +20,10 @@ class QuestionsController < ApplicationController
 	  @question = Question.find(params[:id])
 	end
 
+	def edit
+		@question = Question.find(params[:id])
+	end
+
 	private
 	  def question_params
 	    params.require(:question).permit(:title, :description)
