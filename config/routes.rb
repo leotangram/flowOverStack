@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-	get '/questions', to: 'questions#index'
+	root 'questions#index' 
+	resources :questions
 end
