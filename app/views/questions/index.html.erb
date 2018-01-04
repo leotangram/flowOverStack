@@ -1,1 +1,14 @@
-<h1>Hola mundo</h1>
+<h1>Preguntas</h1>
+
+<table>
+	<tr>
+		<th>Titulo</th>
+		<th>Descripción</th>
+	</tr>
+	<% @questions.each do |question| %>
+		<tr>
+			<td> <%= question.title %> </td>
+			<td> <%= question.description %> </td>
+		</tr>
+	<% end %>
+</table>
