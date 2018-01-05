@@ -14,7 +14,10 @@
 		<% end %>
 
     <% if signed_in? %>
-      <div>Hola <%= current_user.email %></div>
+      <div>
+        Hola <%= current_user.email %>
+        <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class:"dropdown-item" %>
+      </div>
     <% end %>
 
     <%= yield %>
