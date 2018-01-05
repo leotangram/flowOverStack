@@ -9,6 +9,6 @@ es:
       user: 
         email: "email"
         password: "contraseña"
-      post:
+      question:
         title: "El Título"
-        body: "El Cuerpo"
+        description: "La Descripción"
