@@ -10,11 +10,13 @@
         <tr>
           <th>Título</th>
           <th>Descripción</th>
+          <th></th>
         </tr>
         <% @questions.each do |question| %>
           <tr>
             <td><%= link_to question.title, question %></td>
             <td><%= question.description %></td>
+            <td><%= link_to "Editar", edit_question_path(question) %></td>
           </tr>
         <% end %>
       </table>
