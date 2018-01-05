@@ -13,7 +13,7 @@
         </tr>
         <% @questions.each do |question| %>
           <tr>
-            <td><%= question.title %></td>
+            <td><%= link_to question.title, question %></td>
             <td><%= question.description %></td>
           </tr>
         <% end %>
