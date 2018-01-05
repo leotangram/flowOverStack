@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">  
+	<%= link_to "Super Blog", root_path, class: "navbar-brand" %>
+
+ 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+ 		<ul class="navbar-nav mr-auto">
+	  </ul>
+	  <!-- Después de la clase "navbar-nav mr-auto", todo se va a la derecha -->
+    <ul class="navbar-nav nav justify-content-end">
+
+    <% if signed_in? %>
+      <li class="nav-item dropdown">
+        <a class="nav-item nav-link dropdown-toggle mr-md-2 avatar" href="#" id="bd-versions" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="<%= Gravatar.new("#{current_user.email}").image_url %>" class="rounded-circle" />
+          <span class="caret"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+          <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class:"dropdown-item" %>
+        </div>
+      </li>
+      <li>
+      	<%= link_to "<span class='material-icons'>add</span>".html_safe, new_question_path %>
+      </li>
+
+      
+    <% else %>
+      <%= link_to "Registrarse", new_user_registration_path, class:"nav-link" %>
+      <%= link_to 'Ingresar', new_user_session_path, class:"nav-link" %>
+    <% end %>
+  	</ul>
+  </div>
+</nav>
+
+
+      
+
+
+

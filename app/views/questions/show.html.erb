@@ -1,8 +1,26 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <h1><%= @question.title %></h1>
-      <p><%= @question.description %></p>
+<div class="question-page">
+  <header class="question-header">		
+			<h1><%= @question.title %></h1>
+			<%= markdown(@question.description) %>
+			<% if signed_in? %>
+			<div class="actions">
+			  <%= link_to "<span class='material-icons'>edit</span>".html_safe, edit_question_path(@question) %>
+			  <%= link_to "<span class='material-icons'>delete</span>".html_safe, @question, method: :delete, data: { confirm: "¿Estás seguro de eliminar este Post?" } %>
+			</div>
+			<% end %>
+	</header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10 offset-1">
+        <div class="votes">
+          <h2>Votos</h2>
+        </div>
+
+        <div class="comments">
+          <h2>Comentarios</h2>
+        </div>
+      </div>
     </div>
   </div>
 </div>

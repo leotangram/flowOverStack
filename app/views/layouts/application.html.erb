@@ -2,6 +2,9 @@
 <html>
   <head>
     <title>FlowOverStack</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,16 +12,11 @@
   </head>
 
   <body>
+    <%= render 'shared/navbar' %>
+
 		<% if flash[:notice] %>
 		  <div class="alert alert-info"><%= flash[:notice] %></div>
 		<% end %>
-
-    <% if signed_in? %>
-      <div>
-        Hola <%= current_user.email %>
-        <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class:"dropdown-item" %>
-      </div>
-    <% end %>
 
     <%= yield %>
   </body>
