@@ -10,17 +10,26 @@
 			<% end %>
 	</header>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-10 offset-1">
-        <div class="votes">
-          <h2>Votos</h2>
+  <div class="answers">
+      <h2>Respuestas</h2>
+
+    <% @question.answers.each do |answer| %>
+      <div class="card">
+        <header class="card-header"><img style="width: 37px;" src="<%= Gravatar.new("#{answer.user.email}").image_url %>" class="rounded-circle" /></header>
+        <div class="card-body"><%= markdown(answer.body) %></div>
+      </div> <br> 
+    <% end %>
+
+    <% if signed_in? %>
+      <%= form_for [@question, @question.answers.build] do |f| %>
+        <div class="form-group">
+          <%= f.text_area :body, class: "form-control", placeholder: "Agregar respuesta" %>
         </div>
 
-        <div class="comments">
-          <h2>Comentarios</h2>
+        <div class="actions text-right">
+          <%= f.submit "Responder", class: "btn btn-primary" %>
         </div>
-      </div>
-    </div>
+      <% end %>
+    <% end %>
   </div>
 </div>

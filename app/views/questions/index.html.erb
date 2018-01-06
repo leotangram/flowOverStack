@@ -7,14 +7,19 @@
         <div class="question clearfix">
           <div class="question-details">
             <span class="question-title"><%= link_to question.title, question %></span> <br>
-            <span class="question-title"><%= markdown(truncate(question.description, :length => 250)) %> </span>
-          </div> <br> <br> <br>
-          <% if signed_in? && question.user == current_user %>
+            <span class="question-time">Publicado por <%= question.user.email %> hace <%= time_ago_in_words(question.created_at) %> </span>
+            <span class="question-description"><%= markdown(truncate(question.description, :length => 250)) %></span>
+          </div> <br> <br> <br> <br>
+          <% if signed_in? && question.user == current_user %>  
             <div class="actions">
               <%= link_to "<span class='material-icons'>edit</span>".html_safe, edit_question_path(question) %>
-              <%= link_to "<span class='material-icons'>delete</span>".html_safe, question, method: :delete, data: { confirm: "¿Estás seguro de eliminar esta Pregunta?" } %>
+              <%= link_to "<span class='material-icons'>delete</span>".html_safe, @question, method: :delete, data: { confirm: "¿Estás seguro de eliminar esta Pregunta?" } %>
             </div>
           <% end %>
+          <div class="question-answers">
+            <span class="material-icons">question_answer</span>
+            <span class="answer-count"><%= question.answers.count %></span>
+          </div>
         </div>
         <% end %>
       </div>
