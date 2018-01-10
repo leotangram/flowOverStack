@@ -8,6 +8,15 @@
 			  <%= link_to "<span class='material-icons'>delete</span>".html_safe, @question, method: :delete, data: { confirm: "¿Estás seguro de eliminar esta Pregunta?" } %>
 			</div>
 			<% end %>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <%= render '/comments/index', commentable: @question %>
+            <%= render '/comments/form', commentable: @question %> 
+          </div>
+        </div>
+      </div>
 	</header>
 
   <div class="answers">

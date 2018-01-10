@@ -1,0 +1,9 @@
+<div class="answers">
+  <h2>Comentarios</h2>
+  <% commentable.comments.each do |comment| %>
+    <div class="card">
+      <header class="card-header"><img style="width: 37px;" src="<%= Gravatar.new("#{comment.user.email}").image_url %>" class="rounded-circle" /></header>
+      <div class="card-body"><%= markdown(comment.body) %></div>
+    </div> <br> 
+  <% end %>
+</div>
