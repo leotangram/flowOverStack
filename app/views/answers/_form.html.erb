@@ -1,0 +1,10 @@
+<hr>
+<%= form_for [@question, @question.answers.build] do |f| %>
+<div class="form-group">
+  <%= f.text_area :body, class: "form-control", placeholder: "Agregar respuesta" %>
+</div>
+
+<div class="actions text-right">
+  <%= f.submit "Responder", class: "btn btn-primary" %>
+</div>
+<% end %>

@@ -1,44 +1,64 @@
-<div class="question-page">
-  <header class="question-header">		
-			<h1><%= @question.title %></h1>
-			<%= markdown(@question.description) %>
-			<% if signed_in? && @question.user == current_user %>
-			<div class="actions">
-			  <%= link_to "<span class='material-icons'>edit</span>".html_safe, edit_question_path(@question) %>
-			  <%= link_to "<span class='material-icons'>delete</span>".html_safe, @question, method: :delete, data: { confirm: "¿Estás seguro de eliminar esta Pregunta?" } %>
-			</div>
-			<% end %>
+<div class="container">
+  <!-- Preguntas -->
+  <header class="jumbotron">		
+		<h1 class="text-primary"><%= @question.title %></h1>
+		<%= markdown(@question.description) %>
+		<% if signed_in? && @question.user == current_user %>
+    	<div class="actions">
+    	  <%= link_to "<span class='material-icons'>edit</span>".html_safe, edit_question_path(@question) %>
+    	  <%= link_to "<span class='material-icons'>delete</span>".html_safe, @question, method: :delete, data: { confirm: "¿Estás seguro de eliminar esta Pregunta?" } %>
+    	</div>
+      <% if @question.voted_by? current_user %>
+        <%= link_to 'Eliminar Voto',question_vote_path(@question), method: :delete %>
+        <p class="text-info"><span class="material-icons">done_all</span> <%= @question.votes.count %></p>
+      <% else %>
+        <%= link_to 'Votar!', question_vote_path(@question), method: :post%>
+        <p class="text-info"><span class="material-icons">done_all</span> <%= @question.votes.count %></p>
+      <% end %>
+		<% end %>
+    <hr>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <%= render '/comments/index', commentable: @question %>
-            <%= render '/comments/form', commentable: @question %> 
+    <!-- Comentarios de las preguntas  -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4><span class="label label-info">Comentarios</span></h4>
+
+          <!-- Loop que muestra los comentarios de las preguntas  -->
+          <% @question.comments.each do |comment| %> 
+          <div class="card">
+            <header class="card-header"><img style="width: 20px;" src="<%= Gravatar.new("#{comment.user.email}").image_url %>" class="rounded-circle" /></header>
+
+            <div class="card-body"> <%= markdown(comment.body) %> </div>
+            <div class="card-footer text-muted">
+              <%= comment.user.email %>
+            </div>
           </div>
+          <hr class="comments"/>
+          <% end %>
+
+          <!-- Form para comentar las preguntas -->
+          <% if signed_in? %>
+            <%= form_for [@question, @question.comments.build] do |f| %>
+              <div class="form-group">
+                <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario"%>
+              </div>
+                <%= f.submit "Comentar", class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
         </div>
       </div>
+    </div>
 	</header>
 
-  <div class="answers">
-      <h2>Respuestas</h2>
+  <hr>
 
-    <% @question.answers.each do |answer| %>
-      <div class="card">
-        <header class="card-header"><img style="width: 37px;" src="<%= Gravatar.new("#{answer.user.email}").image_url %>" class="rounded-circle" /></header>
-        <div class="card-body"><%= markdown(answer.body) %></div>
-      </div> <br> 
-    <% end %>
 
-    <% if signed_in? %>
-      <%= form_for [@question, @question.answers.build] do |f| %>
-        <div class="form-group">
-          <%= f.text_area :body, class: "form-control", placeholder: "Agregar respuesta" %>
-        </div>
+  <!-- Respuestas -->
+  <%= render 'answers/show' %>
 
-        <div class="actions text-right">
-          <%= f.submit "Responder", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
+  <% if signed_in? %>
+  <!-- Form de Respuesta -->
+  <%= render 'answers/form' %>
+  <% end %>
 </div>

@@ -1,0 +1,54 @@
+<h2>Respuestas</h2>
+
+<% @question.answers.each do |answer| %>
+  <div class="jumbotron">
+    <div class="card">
+      <header class="card-header"><img style="width: 30px;" src="<%= Gravatar.new("#{answer.user.email}").image_url %>" class="rounded-circle" /></header>
+      <div class="card-body">
+        <%= markdown(answer.body) %> 
+      </div>
+      <div class="card-footer text-muted">
+      <%= answer.user.email %>
+      </div>
+    </div> <br> 
+
+      <% if answer.voted_by? current_user %>
+        <%= link_to 'Eliminar Voto',answer_vote_path(answer), method: :delete %>
+        <p>Votos: <%= answer.votes.count %></p>
+      <% else %>
+        <%= link_to 'Votar!', answer_vote_path(answer), method: :post%>
+        <p>Votos: <%= answer.votes.count %></p>
+      <% end %>
+    <hr>
+    <!-- Comentarios de las respuestas  -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h5><span class="label label-info">Comentarios</span></h5>
+
+          <!-- Loop que muestra los comentarios a las respuestas  -->
+          <% answer.comments.each do |comment| %>
+            <div class="card">
+              <header class="card-header"><img style="width: 20px;" src="<%= Gravatar.new("#{comment.user.email}").image_url %>" class="rounded-circle" /></header>
+              <div class="card-body"> <%= markdown(comment.body) %></div>
+              <div class="card-footer text-muted">
+              <%= comment.user.email %>
+            </div>
+            </div>
+            <hr class="comments" />
+          <% end %>
+          <!-- Seccion de comentar las respuestas -->
+          <% if signed_in? %>
+            <%= form_for [answer, answer.comments.build] do |f| %>
+              <div class="form-group">
+                <%= f.text_area :body, class: "form-control", placeholder: "Agregar Comentario a la respuesta"%>
+              </div>
+              <%= f.submit "Comentar", class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
+        </div>  
+      </div>
+    </div>
+    <hr>
+  </div>
+<% end %>

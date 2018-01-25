@@ -2,7 +2,10 @@ class QuestionsController < ApplicationController
 	before_action :private_access, except: [:index, :show]
 
 	def index
-		@questions = Question.all		
+	  @questions = Question.all
+	  if params[:title].present?
+	    @questions = @questions.where("title LIKE ?", "%#{params[:title]}%")
+	  end
 	end
 
 	def new
@@ -11,7 +14,6 @@ class QuestionsController < ApplicationController
 
 	def create
 	  @question = Question.new(question_params)
-	  @question.user = current_user
 	  if @question.save
 	    redirect_to questions_path, notice: "La pregunta fue publicada con éxito"
 	  else
@@ -45,6 +47,6 @@ class QuestionsController < ApplicationController
 
 	private
 	  def question_params
-	    params.require(:question).permit(:title, :description)
+	    params.require(:question).permit(:title, :description).merge(user_id: current_user.id)
 	  end
 end

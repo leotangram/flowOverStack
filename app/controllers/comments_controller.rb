@@ -1,7 +1,4 @@
 class CommentsController < ApplicationController
-	def new
-	end
-
 	def create
 		if params[:question_id].present?
 			@question = Question.find(params[:question_id])
