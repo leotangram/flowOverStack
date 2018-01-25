@@ -8,6 +8,7 @@
     	  <%= link_to "<span class='material-icons'>edit</span>".html_safe, edit_question_path(@question) %>
     	  <%= link_to "<span class='material-icons'>delete</span>".html_safe, @question, method: :delete, data: { confirm: "¿Estás seguro de eliminar esta Pregunta?" } %>
     	</div>
+    <% end %>
       <% if @question.voted_by? current_user %>
         <%= link_to 'Eliminar Voto',question_vote_path(@question), method: :delete %>
         <p class="text-info"><span class="material-icons">done_all</span> <%= @question.votes.count %></p>
@@ -15,7 +16,6 @@
         <%= link_to 'Votar!', question_vote_path(@question), method: :post%>
         <p class="text-info"><span class="material-icons">done_all</span> <%= @question.votes.count %></p>
       <% end %>
-		<% end %>
     <hr>
 
     <!-- Comentarios de las preguntas  -->
